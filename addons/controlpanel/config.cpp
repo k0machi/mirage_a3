@@ -15,7 +15,7 @@ class cfgPatches
 		units[] = {};
 		vehicles[] = {};		
 		version = "1.0";
-		requiredVersion = 1.66;
+		requiredVersion = 1.68;
 	};
 };
 
