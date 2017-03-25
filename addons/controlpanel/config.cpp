@@ -124,7 +124,7 @@ class MRGButtonMenu : RscButtonMenu
     y = "15 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + safezoneY";
     w = "15 * (((safezoneW / safezoneH) min 1.2) / 40)";
     h = "1 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-    onButtonClick = "(findDisplay 49) closeDisplay 0; [] spawn Xeno_fnc_requestAdminAccess";
+    onButtonClick = "(findDisplay 49) closeDisplay 0; [] spawn MRG_fnc_requestAdminAccess";
 };
 
 class RscDisplayMPInterrupt: RscStandardDisplay 
