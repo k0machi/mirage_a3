@@ -5,7 +5,7 @@ with missionNamespace do
 
     if (isServer || !isMultiplayer || serverCommandAvailable "#logout") then
     {
-        [] spawn Xeno_fnc_adminControlPanel;
+        [] spawn MRG_fnc_adminControlPanel;
     }
     else
     {
@@ -13,7 +13,7 @@ with missionNamespace do
         waitUntil { (missionNamespace getVariable["ACP_response",2]) != _state };
         if (missionNamespace getVariable["ACP_response",2] == 0) then
         {
-            [] spawn Xeno_fnc_adminControlPanel;
+            [] spawn MRG_fnc_adminControlPanel;
         }
         else
         {

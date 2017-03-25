@@ -26,7 +26,7 @@ class CfgScriptPaths
 
 class cfgFunctions
 {
-	class Xeno
+	class MRG
 	{
         class acp
         {
@@ -198,7 +198,7 @@ class RscDisplayAdministrator : RscStandardDisplay
         {
             idc = 1100;
             moving = 1;
-            text = "#(argb,512,512,1)r2t(xenocameraview,1.25)";
+            text = "#(argb,512,512,1)r2t(miragecameraview,1.25)";
             x = 3.5 * GUI_GRID_W + GUI_GRID_X;
             y = 13.5 * GUI_GRID_H + GUI_GRID_Y;
             w = 15.5 * GUI_GRID_W;

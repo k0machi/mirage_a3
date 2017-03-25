@@ -5,9 +5,9 @@ _class = _this select 2;
 
 switch _mode do {
 	case "onLoad": {
-		["Init",_params, _class] spawn (uiNamespace getvariable "Xeno_fnc_adminControlPanel");
+		["Init",_params, _class] spawn (uiNamespace getvariable "MRG_fnc_adminControlPanel");
 	};
 	case "onUnload": {
-		["Exit",_params, _class] spawn (uiNamespace getvariable "Xeno_fnc_adminControlPanel");
+		["Exit",_params, _class] spawn (uiNamespace getvariable "MRG_fnc_adminControlPanel");
 	};
 };

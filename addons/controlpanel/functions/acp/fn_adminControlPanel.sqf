@@ -47,7 +47,7 @@
 #define CAMERA_VEHICLE_TARGET_OFFSET [0,8,2]
 #define MEMORY_POINT "Head"
 
-#define RENDER_SURFACE "xenocameraview"
+#define RENDER_SURFACE "miragecameraview"
 #define NORMAL_MODE 0
 #define NVG_MODE 1
 #define TI_WHOT_MODE 2
@@ -160,15 +160,15 @@ switch (_mode) do
         _display displayAddEventHandler ["MouseMoving", WATCH_FIELD_FNC(IDC_ACP_WATCHINPUT4,IDC_ACP_WATCHOUTPUT4)];
         _display displayAddEventHandler ["MouseHolding", WATCH_FIELD_FNC(IDC_ACP_WATCHINPUT4,IDC_ACP_WATCHOUTPUT4)];
         //Start Processing controls
-        GETCONTROL(IDC_BUTTON_EXEC_LOCAL) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecLocal", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_EXEC_REMOTE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecRemote", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_EXEC_SERVER) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecServer", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_ACTION) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onAction", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_CLOSE) ctrlAddEventHandler["MouseButtonClick", { with uiNamespace do { ["Exit", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_CONSOLE) ctrlAddEventHandler["MouseButtonClick", { with uiNamespace do { ["onButtonConsole", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_CAMERA_MODE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonCameraMode", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_BUTTON_CLEAR_LOG) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonClear", _this] call Xeno_fnc_adminControlPanel} }];
-        GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["LBSelChanged", { with uiNamespace do { ["onPlayerListSelectionChanged", _this] call Xeno_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_EXEC_LOCAL) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecLocal", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_EXEC_REMOTE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecRemote", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_EXEC_SERVER) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecServer", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_ACTION) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onAction", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_CLOSE) ctrlAddEventHandler["MouseButtonClick", { with uiNamespace do { ["Exit", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_CONSOLE) ctrlAddEventHandler["MouseButtonClick", { with uiNamespace do { ["onButtonConsole", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_CAMERA_MODE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonCameraMode", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_CLEAR_LOG) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonClear", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["LBSelChanged", { with uiNamespace do { ["onPlayerListSelectionChanged", _this] call MRG_fnc_adminControlPanel} }];
         private _idc = IDC_PLAYER_LISTBOX;
         { 
             CONTROL lbAdd name _x;
@@ -267,7 +267,7 @@ switch (_mode) do
         with missionNamespace do 
         { 
             call compile _format;
-            [missionNamespace, "ACP_messageToLog", [format["An action named '%1' has been executed on %2", _action, _center],true,false]] call BIS_fnc_callScriptedEventHandler;        
+            [missionNamespace, "ACP_messageToLog", [format["An action named '%1' has been executed on %2 by %3", _action, name _center, profileName],false,true]] call BIS_fnc_callScriptedEventHandler;        
         };        
     };
     case "onButtonCameraMode":
