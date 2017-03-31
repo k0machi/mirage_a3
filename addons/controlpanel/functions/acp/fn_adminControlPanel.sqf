@@ -314,6 +314,7 @@ switch (_mode) do
         with missionNamespace do
         {
             private _callback = [[_center], compile ctrlText CONTROL] remoteExecCall["call", [0,2] select isMultiplayer];
+            [missionNamespace, "ACP_messageToLog", [format["Server code execution by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
         };
     };
     case "onExecRemote":
@@ -324,12 +325,11 @@ switch (_mode) do
         with missionNamespace do
         {
             private _callback = [[_center], compile ctrlText CONTROL] remoteExecCall["call", _center];
+            [missionNamespace, "ACP_messageToLog", [format["Code execution on %1 by %2", name _center, profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
         };
     };
     case "Exit": 
     {
-        profileNamespace setVariable["RscDisplayAdministrator_expression", ctrlText ((uiNamespace getVariable "RscDisplayAdministrator") displayCtrl IDC_CODE_EDITBOX)];
-        saveProfileNamespace;
         (uiNamespace getVariable["ACP_Camera", objNull]) cameraEffect ["TERMINATE", "BACK"];
         camDestroy (uiNamespace getVariable["ACP_Camera", objNull]);
         deleteVehicle (uiNamespace getVariable["ACP_Camera", objNull]);
