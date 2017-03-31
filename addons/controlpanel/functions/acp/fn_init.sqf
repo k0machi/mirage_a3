@@ -19,7 +19,7 @@ switch (_mode) do
         }] call BIS_fnc_addScriptedEventHandler;
         //netMessage Listener
         "ACP_netMessage" addPublicVariableEventHandler {
-            [missionNamespace, "ACP_messageToLog", ["[NETWORK]" + str (_this select 1),true,false]] call BIS_fnc_callScriptedEventHandler;
+            [missionNamespace, "ACP_messageToLog", [format["[NETWORK] %1", (_this select 1)],true,false]] call BIS_fnc_callScriptedEventHandler;
         };
         //Dedicated Server ACL Listener
         "ACP_requestAccess" addPublicVariableEventHandler {
