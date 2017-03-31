@@ -297,7 +297,7 @@ switch (_mode) do
         detach _tgt;
         if (vehicle _center != _center) then
         {
-            _camera attachTo [vehicle _center, CAMERA_VEHICLE_OFFSET];
+            _camera attachTo [vehicle _center, CAMERA_VEHICLE_OFFSET, "camera"];
             _tgt attachTo[vehicle _center, CAMERA_VEHICLE_TARGET_OFFSET];
         }
         else

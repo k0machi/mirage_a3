@@ -102,6 +102,7 @@ class CfgAdminActions
 class RscStandardDisplay;
 class IGUIBack;
 class RscText;
+class RscTree;
 class RscActiveText;
 class RscButton;
 class RscButtonMenu;
