@@ -242,6 +242,7 @@ switch (_mode) do
         with missionNamespace do 
         { 
             [_center] call compile ctrlText CONTROL;
+            [missionNamespace, "ACP_messageToLog", [format["Local code execution by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
         };   
     };
     case "onButtonClear":
