@@ -256,6 +256,7 @@ switch (_mode) do
     {
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
         private _idc = (_this select 0);
+        [missionNamespace, "ACP_messageToLog", [format["RscDisplayDebugPublic opened by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
         _display createDisplay "RscDisplayDebugPublic";
     };
     case "onAction":
