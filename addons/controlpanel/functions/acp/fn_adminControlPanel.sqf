@@ -290,7 +290,7 @@ switch (_mode) do
     case "onButtonBan":
     {
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        [format["#ban %1", getPlayerUID _center], profileName] remoteExec ["MRG_fnc_executeServerCommand"];
+        [format["#exec ban ""%1""", getPlayerUID _center], profileName] remoteExec ["MRG_fnc_executeServerCommand"];
         [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been banned from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
     };
     case "onButtonRestart":
