@@ -128,6 +128,11 @@ switch (_mode) do
             private _display = _this select 0; \
             private _input = _display displayCtrl WATCHINPUT; \
             private _this = ctrlText _input; \
+            if ((((missionNamespace getVariable["ACP_response", [2,[0,0,0,0,0,0,0,0]]]) select 1) select 7) == 0) exitWith \
+            { \
+                _input ctrlEnable false; \
+                _display displayCtrl WATCHOUTPUT ctrlSetText "ACCESS DENIED"; \
+            }; \
             if (_this isEqualTo "") exitWith \
             { \
                 _input ctrlSetBackgroundColor [0,0,0,0]; \
