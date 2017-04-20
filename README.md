@@ -1,7 +1,7 @@
 # Mirage Coordinator
 ## An Arma 3 Administration and Debug tool
 
-Mirage Coordinator is an administration and debugging tool for Arma 3 videogame, intended to be used with medium-large communities with multiple active administrators. 
+Mirage Coordinator is an administration and debugging tool for the Arma 3 videogame, intended to be used with medium-large communities with multiple active administrators. 
 
 #### Features
 * Secure
