@@ -391,6 +391,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             idc = 1609;
             x = 47.5 * GUI_GRID_W + GUI_GRID_X;
             tooltip = "Restart Mission";
+            text = "\mirage\addons\controlpanel\res\iconRestart.paa";
         };
         class ctUnitInfo: RscStructuredText
         {
