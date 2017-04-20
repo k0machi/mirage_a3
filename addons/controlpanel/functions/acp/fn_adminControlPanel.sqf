@@ -9,6 +9,9 @@
 #define IDC_BUTTON_CLOSE 1201
 #define IDC_BUTTON_CONSOLE 1202
 #define IDC_BUTTON_ACTION 1601
+#define IDC_BUTTON_KICK 1607
+#define IDC_BUTTON_BAN 1608
+#define IDC_BUTTON_RESTART 1609
 #define IDC_BUTTON_EXEC_LOCAL 1604
 #define IDC_BUTTON_EXEC_REMOTE 1603
 #define IDC_BUTTON_EXEC_SERVER 1602
@@ -171,7 +174,7 @@ switch (_mode) do
         GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["LBSelChanged", { with uiNamespace do { ["onPlayerListSelectionChanged", _this] call MRG_fnc_adminControlPanel} }];
         {
             GETCONTROL(_x) ctrlEnable ([false,true] select ((((missionNamespace getVariable["ACP_response", [2,[0,0,0,0,0,0,0,0]]]) select 1) select _forEachIndex) == 1))
-        } foreach [IDC_BUTTON_ACTION, IDC_BUTTON_ACTION, IDC_BUTTON_ACTION, IDC_BUTTON_ACTION, IDC_BUTTON_EXEC_LOCAL, IDC_BUTTON_EXEC_REMOTE, IDC_BUTTON_EXEC_SERVER,IDC_BUTTON_CONSOLE];
+        } foreach [IDC_BUTTON_KICK, IDC_BUTTON_BAN, IDC_BUTTON_RESTART, IDC_BUTTON_ACTION, IDC_BUTTON_EXEC_LOCAL, IDC_BUTTON_EXEC_REMOTE, IDC_BUTTON_EXEC_SERVER,IDC_BUTTON_CONSOLE];
         private _idc = IDC_PLAYER_LISTBOX;
         { 
             CONTROL lbAdd name _x;

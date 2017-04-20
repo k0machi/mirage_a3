@@ -183,7 +183,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             x = -11 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
             w = 14.5 * GUI_GRID_W;
-            h = 12.5 * GUI_GRID_H;
+            h = 10.5 * GUI_GRID_H;
         };
         class buttonCameraMode: RscButton
         {
@@ -367,6 +367,29 @@ class RscDisplayAdministrator : RscStandardDisplay
             w = 2 * GUI_GRID_W;
             h = 1.5 * GUI_GRID_H;
             tooltip = "Open Debug Console"; //--- ToDo: Localize;
+        };
+        class buttonKick: RscButton
+        {
+            idc = 1607;
+            moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
+            text = "KICK"; //--- ToDo: Localize;
+            x = -11 * GUI_GRID_W + GUI_GRID_X;
+            y = 11.5 * GUI_GRID_H + GUI_GRID_Y;
+            w = 7.25 * GUI_GRID_W;
+            h = 2 * GUI_GRID_H;            
+        };
+        class buttonBan: buttonKick
+        {
+            idc = 1608;
+            text = "BAN";
+            x = -3.75 * GUI_GRID_W + GUI_GRID_X;
+        };
+        class buttonRestart: ButtonConsole
+        {
+            idc = 1609;
+            x = 47.5 * GUI_GRID_W + GUI_GRID_X;
+            tooltip = "Restart Mission";
         };
         class ctUnitInfo: RscStructuredText
         {
