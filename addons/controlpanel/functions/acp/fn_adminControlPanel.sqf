@@ -30,7 +30,7 @@
 
 #define MAP_ZOOM 0.1
 #define MAP_SPEED 1
-#define SCALE ((0.04) * (0.7))
+#define SCALE ((0.04) * (0.95))
 
 #define IDC_OK 1
 #define IDC_CANCEL 2
@@ -166,6 +166,9 @@ switch (_mode) do
         GETCONTROL(IDC_BUTTON_EXEC_LOCAL) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecLocal", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_EXEC_REMOTE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecRemote", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_EXEC_SERVER) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecServer", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_KICK) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonKick", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_BAN) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonBan", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_RESTART) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonRestart", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_ACTION) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onAction", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_CLOSE) ctrlAddEventHandler["MouseButtonClick", { with uiNamespace do { ["Exit", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_CONSOLE) ctrlAddEventHandler["MouseButtonClick", { with uiNamespace do { ["onButtonConsole", _this] call MRG_fnc_adminControlPanel} }];
@@ -265,6 +268,20 @@ switch (_mode) do
         [missionNamespace, "ACP_messageToLog", [format["RscDisplayDebugPublic opened by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
         _display createDisplay "RscDisplayDebugPublic";
     };
+    case "onButtonKick":
+    {
+        private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
+        [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been kicked from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+    };
+    case "onButtonBan":
+    {
+        private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
+        [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been kicked from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+    };
+    case "onButtonRestart":
+    {
+        [missionNamespace, "ACP_messageToLog", [format["Mission Restart by %1", profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+    };
     case "onAction":
     {
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
@@ -343,6 +360,6 @@ switch (_mode) do
         deleteVehicle (uiNamespace getVariable["ACP_Camera", objNull]);
         deleteVehicle (uiNamespace getVariable["ACP_Target", objNull]);
         (uiNamespace getVariable "RscDisplayAdministrator") closeDisplay IDC_OK;
-        missionNamespace setVariable ["ACP_response", 2];
+        missionNamespace setVariable ["ACP_response", [2,[0,0,0,0,0,0,0,0]]];
     };
 };
