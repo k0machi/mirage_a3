@@ -282,16 +282,16 @@ switch (_mode) do
     };
     case "onButtonRestart":
     {
-        if ((missionNamespace getVariable["confirmRestart", 0]) == 4) then
+        if ((missionNamespace getVariable["acp_confirmRestart", 0]) == 4) then
         {
             [missionNamespace, "ACP_messageToLog", [format["Mission Restart by %1", profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
             ["#restart", profileName] remoteExec ["MRG_fnc_executeServerCommand"];
         }
         else
         {
-            _level = missionNamespace getVariable["confirmRestart", 0];
+            _level = missionNamespace getVariable["acp_confirmRestart", 0];
             [missionNamespace, "ACP_messageToLog", [format["Please click %1 more times to confirm restart.", 4-_level],false,false]] call BIS_fnc_callScriptedEventHandler;
-            missionNamespace setVariable["confirmRestart", _level + 1];
+            missionNamespace setVariable["acp_confirmRestart", _level + 1];
         };
     };
     case "onAction":
@@ -373,5 +373,6 @@ switch (_mode) do
         deleteVehicle (uiNamespace getVariable["ACP_Target", objNull]);
         (uiNamespace getVariable "RscDisplayAdministrator") closeDisplay IDC_OK;
         missionNamespace setVariable ["ACP_response", [2,[0,0,0,0,0,0,0,0]]];
+        missionNamespace getVariable["acp_confirmRestart", 0];
     };
 };
