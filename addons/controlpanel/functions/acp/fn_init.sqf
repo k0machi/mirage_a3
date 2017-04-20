@@ -22,7 +22,8 @@ switch (_mode) do
         "ACP_netMessage" addPublicVariableEventHandler {
             [missionNamespace, "ACP_messageToLog", [format["[NETWORK] %1", (_this select 1)],true,false]] call BIS_fnc_callScriptedEventHandler;
         };
-        //Dedicated Server ACL Listener
+        //Dedicated Server ACL Listener -- DEPRECATED
+        /*
         "ACP_requestAccess" addPublicVariableEventHandler {
             (_this select 1) params ["_uid", "_netId"];
             if (clientOwner == _netId) exitWith {};
@@ -30,8 +31,10 @@ switch (_mode) do
             if (_uid in _ACL) then { ACP_response = 0; } else { ACP_response = 1; };
             _netId publicVariableClient "ACP_response";
         };
+        
         //ACL Response Listener
         missionNamespace setVariable["ACP_response", 2];
+        */
         //Compile actions and store them in missionNamespace
         {
             _prefix = configName _x;
@@ -51,7 +54,7 @@ switch (_mode) do
         [missionNamespace, "ACP_messageToLog", ["postInit finished",true,false]] call BIS_fnc_callScriptedEventHandler;
         if (missionNamespace getVariable["cba_keybinding", false]) then
         {
-            ["Mirage Coordinator", "OpenMirage", ["Open Mirage Coordinator", "Opens Administration Control Panel"], { [] spawn MRG_fnc_requestAdminAccess; false }, { }, [DIK_F12, [true, true, false]],false] call cba_fnc_addKeybind;
+            ["Mirage Coordinator", "OpenMirage", ["Open Mirage Coordinator", "Opens Administration Control Panel"], { ["Client",[]] spawn MRG_fnc_requestAdminAccess; false }, { }, [DIK_F12, [true, true, false]],false] call cba_fnc_addKeybind;
             [missionNamespace, "ACP_messageToLog", ["CBA Keybinding detected. Adding Hotkeys",true,false]] call BIS_fnc_callScriptedEventHandler;
         };
     };
