@@ -86,6 +86,11 @@ class CfgAdminActions
                 name = "Spawn Arsenal Box";
                 tooltip = "Create Arsenal Box infront of selected unit.\nArguments: [boxClass::STRING]";
             };
+            class openArsenal
+            {
+                name = "Open Arsenal on Unit";
+                tooltip = "Opens Virtual Arsenal on a target unit.\nWARNING: LOCALITY ISSUES";
+            };
             class createZeusModule
             {
                 name = "Create Zeus Module";
