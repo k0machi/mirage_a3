@@ -1,3 +1,14 @@
+/*
+
+    Here you can define users who can access mirage coordinator and specify their permissions
+    ids: List of SteamID64s of people you want to have access
+    masks: Their respective masks, has to be an array with 8 elements of either 0 or 1, granting or revoking specific permissions
+    maskMission: Single mask for any user that has been added through missionConfigFile
+    serverCommandPassword: should match same property in your server.cfg to allow kick, ban and restart actions.
+
+*/
+
+
 #define CAN_KICK 1
 #define CAN_BAN 1
 #define CAN_MISSIONCONTROL 1
