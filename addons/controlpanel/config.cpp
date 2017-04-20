@@ -36,7 +36,7 @@ class cfgFunctions
             class init 
             {
                 postInit = 1;
-                recompile = 1;
+                recompile = 0;
             };
         };
 	};

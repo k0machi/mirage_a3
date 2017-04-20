@@ -1,5 +1,6 @@
 
 #define ACTIONSPATH (configFile >> "CfgAdminActions")
+#include "\a3\editor_f\Data\Scripts\dikCodes.h"
 
 params ["_mode"];
 
@@ -48,5 +49,10 @@ switch (_mode) do
             } foreach ("true" configClasses _x);
         } foreach (("true" configClasses (missionConfigFile >> "CfgAdminActions" )) + ("true" configClasses ACTIONSPATH));
         [missionNamespace, "ACP_messageToLog", ["postInit finished",true,false]] call BIS_fnc_callScriptedEventHandler;
+        if (missionNamespace getVariable["cba_keybinding", false]) then
+        {
+            ["Mirage Coordinator", "OpenMirage", ["Open Mirage Coordinator", "Opens Administration Control Panel"], { [] spawn MRG_fnc_requestAdminAccess; false }, { }, [DIK_F12, [true, true, false]],false] call cba_fnc_addKeybind;
+            [missionNamespace, "ACP_messageToLog", ["CBA Keybinding detected. Adding Hotkeys",true,false]] call BIS_fnc_callScriptedEventHandler;
+        };
     };
 };
