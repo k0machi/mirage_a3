@@ -33,6 +33,7 @@ class cfgFunctions
             file = "\mirage\addons\controlpanel\functions\acp";
             class adminControlPanel {};
             class requestAdminAccess {};
+            class executeServerCommand {};
             class init 
             {
                 postInit = 1;

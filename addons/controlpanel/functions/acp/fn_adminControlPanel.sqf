@@ -271,16 +271,28 @@ switch (_mode) do
     case "onButtonKick":
     {
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
+        [format["#kick %1", getPlayerUID _center], profileName] remoteExec ["MRG_fnc_executeServerCommand"];
         [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been kicked from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
     };
     case "onButtonBan":
     {
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been kicked from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+        [format["#ban %1", getPlayerUID _center], profileName] remoteExec ["MRG_fnc_executeServerCommand"];
+        [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been banned from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
     };
     case "onButtonRestart":
     {
-        [missionNamespace, "ACP_messageToLog", [format["Mission Restart by %1", profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+        if ((missionNamespace getVariable["confirmRestart", 0]) == 4) then
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Mission Restart by %1", profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+            ["#restart", profileName] remoteExec ["MRG_fnc_executeServerCommand"];
+        }
+        else
+        {
+            _level = missionNamespace getVariable["confirmRestart", 0];
+            [missionNamespace, "ACP_messageToLog", [format["Please click %1 more times to confirm restart.", 4-_level],false,false]] call BIS_fnc_callScriptedEventHandler;
+            missionNamespace setVariable["confirmRestart", _level + 1];
+        };
     };
     case "onAction":
     {
