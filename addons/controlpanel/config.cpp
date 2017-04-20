@@ -294,6 +294,7 @@ class RscDisplayAdministrator : RscStandardDisplay
         {
             idc = 1601;
             moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
             text = "EXECUTE"; //--- ToDo: Localize;
             x = 19 * GUI_GRID_W + GUI_GRID_X;
             y = 23 * GUI_GRID_H + GUI_GRID_Y;
@@ -304,6 +305,7 @@ class RscDisplayAdministrator : RscStandardDisplay
         {
             idc = 1602;
             moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
             text = "Server Exec"; //--- ToDo: Localize;
             x = 34.5 * GUI_GRID_W + GUI_GRID_X;
             y = 23 * GUI_GRID_H + GUI_GRID_Y;
@@ -314,6 +316,7 @@ class RscDisplayAdministrator : RscStandardDisplay
         {
             idc = 1603;
             moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
             text = "Remote Exec"; //--- ToDo: Localize;
             x = 41.5 * GUI_GRID_W + GUI_GRID_X;
             y = 23 * GUI_GRID_H + GUI_GRID_Y;
@@ -324,6 +327,7 @@ class RscDisplayAdministrator : RscStandardDisplay
         {
             idc = 1604;
             moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
             text = "Local Exec"; //--- ToDo: Localize;
             x = 48.5 * GUI_GRID_W + GUI_GRID_X;
             y = 23 * GUI_GRID_H + GUI_GRID_Y;
@@ -338,7 +342,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             color[] = {1,1,1,0.7};
             colorActive[] = {1,1,1,1};
             colorBackground[] = {0,0,0,0};
-            colorDisabled[] = {1,1,1,0.25};
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
             colorText[] = {1,1,1,0.7};
             tooltip = "Close";
             text = "\A3\Ui_f\data\GUI\Rsc\RscDisplayArcadeMap\icon_exit_cross_ca.paa";
@@ -355,7 +359,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             color[] = {1,1,1,0.7};
             colorActive[] = {1,1,1,1};
             colorBackground[] = {0,0,0,0};
-            colorDisabled[] = {1,1,1,0.25};
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
             colorText[] = {1,1,1,0.7};
             text = "\mirage\addons\controlpanel\res\iconConsole.paa";
             x = 50 * GUI_GRID_W + GUI_GRID_X;

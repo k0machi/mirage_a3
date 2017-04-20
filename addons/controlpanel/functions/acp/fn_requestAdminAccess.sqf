@@ -15,8 +15,9 @@
 #define CANNOT_REMOTEEXEC 0
 #define CANNOT_LOCALEXEC 0
 #define DEFAULT_MASK [CANNOT_KICK,CANNOT_BAN,CANNOT_MISSIONCONTROL,CANNOT_DOACTIONS,CANNOT_LOCALEXEC,CANNOT_REMOTEEXEC,CANNOT_SERVEREXEC,CANNOT_USEDEBUGCONSOLE]
-#define MISSION_ADMIN_MASK [CANNOT_KICK,CANNOT_BAN,CANNOT_MISSIONCONTROL,CAN_DOACTIONS,CAN_LOCALEXEC,CAN_REMOTEEXEC,CAN_SERVEREXEC,CANNOT_USEDEBUGCONSOLE]
+#define MISSION_ADMIN_MASK (getArray(configFile >> "CfgAdmins" >> "maskMission"))
 #define CONFIG_ADMIN_MASK (getArray(configFile >> "CfgAdmins" >> "masks") select (_configAdmins find _uid))
+#define FULL_ACCESS [CAN_KICK,CAN_BAN,CAN_MISSIONCONTROL,CAN_DOACTIONS,CAN_LOCALEXEC,CAN_REMOTEEXEC,CAN_SERVEREXEC,CAN_USEDEBUGCONSOLE]
 
 params ["_mode", "_params"];
 
@@ -29,6 +30,7 @@ with missionNamespace do
             missionNamespace setVariable["ACP_response",[2,DEFAULT_MASK]];
             if (isServer || !isMultiplayer || serverCommandAvailable "#logout") then
             {
+                missionNamespace setVariable["ACP_response",[0,FULL_ACCESS]];
                 [] spawn MRG_fnc_adminControlPanel;
             }
             else

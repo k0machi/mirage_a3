@@ -169,6 +169,9 @@ switch (_mode) do
         GETCONTROL(IDC_BUTTON_CAMERA_MODE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonCameraMode", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_CLEAR_LOG) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonClear", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["LBSelChanged", { with uiNamespace do { ["onPlayerListSelectionChanged", _this] call MRG_fnc_adminControlPanel} }];
+        {
+            GETCONTROL(_x) ctrlEnable ([false,true] select ((((missionNamespace getVariable["ACP_response", [2,[0,0,0,0,0,0,0,0]]]) select 1) select _forEachIndex) == 1))
+        } foreach [IDC_BUTTON_ACTION, IDC_BUTTON_ACTION, IDC_BUTTON_ACTION, IDC_BUTTON_ACTION, IDC_BUTTON_EXEC_LOCAL, IDC_BUTTON_EXEC_REMOTE, IDC_BUTTON_EXEC_SERVER,IDC_BUTTON_CONSOLE];
         private _idc = IDC_PLAYER_LISTBOX;
         { 
             CONTROL lbAdd name _x;
