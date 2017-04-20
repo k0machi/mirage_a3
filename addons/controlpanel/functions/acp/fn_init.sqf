@@ -22,19 +22,6 @@ switch (_mode) do
         "ACP_netMessage" addPublicVariableEventHandler {
             [missionNamespace, "ACP_messageToLog", [format["[NETWORK] %1", (_this select 1)],true,false]] call BIS_fnc_callScriptedEventHandler;
         };
-        //Dedicated Server ACL Listener -- DEPRECATED
-        /*
-        "ACP_requestAccess" addPublicVariableEventHandler {
-            (_this select 1) params ["_uid", "_netId"];
-            if (clientOwner == _netId) exitWith {};
-            _ACL = getArray(configFile >> "CfgAdmins" >> "ids") + getArray(missionConfigFile >> "CfgAdmins" >> "ids");
-            if (_uid in _ACL) then { ACP_response = 0; } else { ACP_response = 1; };
-            _netId publicVariableClient "ACP_response";
-        };
-        
-        //ACL Response Listener
-        missionNamespace setVariable["ACP_response", 2];
-        */
         //Compile actions and store them in missionNamespace
         {
             _prefix = configName _x;
