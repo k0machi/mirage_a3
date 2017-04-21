@@ -71,6 +71,11 @@ class CfgAdminActions
                 name = "Heal Everyone";
                 tooltip = "Heal Every player.\nArguments: [ace3DisplayHealer::BOOL, healer::OBJ]";
             };
+            class neutralizeUnit
+            {
+                name = "Neutralize Unit";
+                tooltip = "Neutralize an object by intrinsic means:\n - soldiers are blown up by mine\n - vehicles are shelled by artillery\n - air units are hit by AA missile\n - underwater units are simply killed";
+            }
             class respawnPlayer
             {
                 name = "Force Respawn";
