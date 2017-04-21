@@ -40,7 +40,7 @@
 #define COLOR_INDEPENDENT [(profilenamespace getvariable ['Map_Independent_R',0]),(profilenamespace getvariable ['Map_Independent_G',1]),(profilenamespace getvariable ['Map_Independent_B',1]),(profilenamespace getvariable ['Map_Independent_A',0.8])]
 #define COLOR_CIV [(profilenamespace getvariable ['Map_Civilian_R',0]),(profilenamespace getvariable ['Map_Civilian_G',1]),(profilenamespace getvariable ['Map_Civilian_B',1]),(profilenamespace getvariable ['Map_Civilian_A',0.8])]
 
-#define IDC_UNIT_INFO_TEXT ["Name: %1<br />Class: %2<br />Side: <t color='%8'>%3</t><br />Map Position: <br />   X: %4<br />   Y: %5<br />   Z: %6<br />GRIDREF: %7", name _center, typeOf _center, side _center, round ((getPosATL _center) select 0), round ((getPosATL _center) select 1), round ((getPosATL _center) select 2), mapGridPosition _center,([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _center))) call BIS_fnc_colorRGBAtoHTML]
+#define IDC_UNIT_INFO_TEXT ["Name: %1<br />Class: %2<br />Side: <t color='%8'>%3</t><br />Map Position: <br />   X: %4<br />   Y: %5<br />   Z: %6<br />GRIDREF: %7<br /><br /><a href='http://steamcommunity.com/profiles/%9'>Steam Profile</a>", name _center, typeOf _center, side _center, round ((getPosATL _center) select 0), round ((getPosATL _center) select 1), round ((getPosATL _center) select 2), mapGridPosition _center,([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _center))) call BIS_fnc_colorRGBAtoHTML, getPlayerUID _center]
 
 #define PLAYER_LIST allPlayers
 
@@ -128,7 +128,7 @@ switch (_mode) do
             private _display = _this select 0; \
             private _input = _display displayCtrl WATCHINPUT; \
             private _this = ctrlText _input; \
-            if ((((missionNamespace getVariable["ACP_response", [2,[0,0,0,0,0,0,0,0]]]) select 1) select 7) == 0) exitWith \
+            if !("h" in (call (missionNamespace getVariable "mrg_checkflags"))) exitWith \
             { \
                 _input ctrlEnable false; \
                 _display displayCtrl WATCHOUTPUT ctrlSetText "ACCESS DENIED"; \
@@ -181,9 +181,7 @@ switch (_mode) do
         GETCONTROL(IDC_BUTTON_CLEAR_LOG) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonClear", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["LBSelChanged", { with uiNamespace do { ["onPlayerListSelectionChanged", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["onLBDblClick", { with uiNamespace do { ["onPlayerListDblClick", _this] call MRG_fnc_adminControlPanel} }];
-        {
-            GETCONTROL(_x) ctrlEnable ([false,true] select ((((missionNamespace getVariable["ACP_response", [2,[0,0,0,0,0,0,0,0]]]) select 1) select _forEachIndex) == 1))
-        } foreach [IDC_BUTTON_KICK, IDC_BUTTON_BAN, IDC_BUTTON_RESTART, IDC_BUTTON_ACTION, IDC_BUTTON_EXEC_LOCAL, IDC_BUTTON_EXEC_REMOTE, IDC_BUTTON_EXEC_SERVER,IDC_BUTTON_CONSOLE];
+        { GETCONTROL((_x select 0)) ctrlEnable ([false,true] select ((_x select 1) in (call (missionNamespace getVariable "mrg_checkflags")))); } foreach [[IDC_BUTTON_KICK,"a"], [IDC_BUTTON_BAN,"b"], [IDC_BUTTON_RESTART, "c"], [IDC_BUTTON_ACTION,"d"], [IDC_BUTTON_EXEC_LOCAL, "e"], [IDC_BUTTON_EXEC_REMOTE, "f"], [IDC_BUTTON_EXEC_SERVER,"g"],[IDC_BUTTON_CONSOLE,"h"]];
         private _idc = IDC_PLAYER_LISTBOX;
         { 
             CONTROL lbAdd name _x;
@@ -254,11 +252,18 @@ switch (_mode) do
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
         private _idc = IDC_CODE_EDITBOX;
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        with missionNamespace do 
-        { 
-            [_center] call compile ctrlText CONTROL;
-            [missionNamespace, "ACP_messageToLog", [format["Local code execution by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
-        };   
+        if ("e" in (call (missionNamespace getVariable "mrg_checkflags"))) then
+        {
+            with missionNamespace do 
+            { 
+                [_center] call compile ctrlText CONTROL;
+                [missionNamespace, "ACP_messageToLog", [format["Local code execution by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
+            };   
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
+        };
     };
     case "onButtonClear":
     {
@@ -278,33 +283,63 @@ switch (_mode) do
     {
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
         private _idc = (_this select 0);
-        [missionNamespace, "ACP_messageToLog", [format["RscDisplayDebugPublic opened by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
-        _display createDisplay "RscDisplayDebugPublic";
+        if ("h" in (call (missionNamespace getVariable "mrg_checkflags"))) then
+        {
+            [missionNamespace, "ACP_messageToLog", [format["RscDisplayDebugPublic opened by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
+            _display createDisplay "RscDisplayDebugPublic";
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
+        };
+        
     };
     case "onButtonKick":
     {
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        [format["#kick %1", getPlayerUID _center], profileName] remoteExec ["MRG_fnc_executeServerCommand"];
-        [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been kicked from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+        if ("a" in (call (missionNamespace getVariable "mrg_checkflags"))) then
+        {
+            [format["#kick %1", getPlayerUID _center], getPlayerUID player, getPlayerUID _center, serverCommandAvailable "#logout"] remoteExec ["MRG_fnc_executeServerCommand"];
+            [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been kicked from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
+        };
+        
     };
     case "onButtonBan":
     {
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        [format["#exec ban ""%1""", getPlayerUID _center], profileName] remoteExec ["MRG_fnc_executeServerCommand"];
-        [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been banned from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
-    };
-    case "onButtonRestart":
-    {
-        if ((missionNamespace getVariable["acp_confirmRestart", 0]) == 4) then
+        if ("b" in (call (missionNamespace getVariable "mrg_checkflags"))) then
         {
-            [missionNamespace, "ACP_messageToLog", [format["Mission Restart by %1", profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
-            ["#restart", profileName] remoteExec ["MRG_fnc_executeServerCommand"];
+            [format["#exec ban ""%1""", getPlayerUID _center], getPlayerUID player, getPlayerUID _center, serverCommandAvailable "#logout"] remoteExec ["MRG_fnc_executeServerCommand"];
+            [missionNamespace, "ACP_messageToLog", [format["Player %1 (%2) has been banned from the server by %3", name _center, getPlayerUID _center, profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
         }
         else
         {
-            _level = missionNamespace getVariable["acp_confirmRestart", 0];
-            [missionNamespace, "ACP_messageToLog", [format["Please click %1 more times to confirm restart.", 4-_level],false,false]] call BIS_fnc_callScriptedEventHandler;
-            missionNamespace setVariable["acp_confirmRestart", _level + 1];
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
+        };
+    };
+    case "onButtonRestart":
+    {
+        if ("c" in (call (missionNamespace getVariable "mrg_checkflags"))) then
+        {
+            if ((missionNamespace getVariable["acp_confirmRestart", 0]) == 4) then
+            {
+                [missionNamespace, "ACP_messageToLog", [format["Mission Restart by %1", profileName],true,true]] call BIS_fnc_callScriptedEventHandler;
+                ["#restart", getPlayerUID player, getPlayerUID player, serverCommandAvailable "#logout"] remoteExec ["MRG_fnc_executeServerCommand"];
+            }
+            else
+            {
+                _level = missionNamespace getVariable["acp_confirmRestart", 0];
+                [missionNamespace, "ACP_messageToLog", [format["Please click %1 more times to confirm restart.", 4-_level],false,false]] call BIS_fnc_callScriptedEventHandler;
+                missionNamespace setVariable["acp_confirmRestart", _level + 1];
+            };
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
         };
     };
     case "onAction":
@@ -314,11 +349,18 @@ switch (_mode) do
         private _args = ctrlText GETCONTROL(IDC_CODE_EDITBOX);
         private _action = GETCONTROL(IDC_ACTION_LISTBOX) lbData (lbCurSel GETCONTROL(IDC_ACTION_LISTBOX));
         private _format = format["[_center, [%1]] call %2",_args,_action];
-        with missionNamespace do 
-        { 
-            call compile _format;
-            [missionNamespace, "ACP_messageToLog", [format["An action named '%1' has been executed on %2 by %3", _action, name _center, profileName],false,true]] call BIS_fnc_callScriptedEventHandler;        
-        };        
+        if ("d" in (call (missionNamespace getVariable "mrg_checkflags"))) then
+        {
+            with missionNamespace do 
+            { 
+                call compile _format;
+                [missionNamespace, "ACP_messageToLog", [format["An action named '%1' has been executed on %2 by %3", _action, name _center, profileName],false,true]] call BIS_fnc_callScriptedEventHandler;        
+            };   
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
+        };     
     };
     case "onButtonCameraMode":
     {
@@ -361,10 +403,17 @@ switch (_mode) do
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
         private _idc = IDC_CODE_EDITBOX;
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        with missionNamespace do
+        if ("g" in (call (missionNamespace getVariable "mrg_checkflags"))) then
         {
-            private _callback = [[_center], compile ctrlText CONTROL] remoteExecCall["call", [0,2] select isMultiplayer];
-            [missionNamespace, "ACP_messageToLog", [format["Server code execution by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
+            with missionNamespace do
+            {
+                private _callback = [[_center], compile ctrlText CONTROL] remoteExecCall["call", [0,2] select isMultiplayer];
+                [missionNamespace, "ACP_messageToLog", [format["Server code execution by %1", profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
+            };   
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
         };
     };
     case "onExecRemote":
@@ -372,10 +421,17 @@ switch (_mode) do
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
         private _idc = IDC_CODE_EDITBOX;
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        with missionNamespace do
+        if ("f" in (call (missionNamespace getVariable "mrg_checkflags"))) then
         {
-            private _callback = [[_center], compile ctrlText CONTROL] remoteExecCall["call", _center];
-            [missionNamespace, "ACP_messageToLog", [format["Code execution on %1 by %2", name _center, profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
+            with missionNamespace do
+            {
+                private _callback = [[_center], compile ctrlText CONTROL] remoteExecCall["call", _center];
+                [missionNamespace, "ACP_messageToLog", [format["Code execution on %1 by %2", name _center, profileName],false,true]] call BIS_fnc_callScriptedEventHandler;
+            };
+        }
+        else
+        {
+            [missionNamespace, "ACP_messageToLog", [format["Not enough permissions", profileName],false,false]] call BIS_fnc_callScriptedEventHandler;
         };
     };
     case "Exit": 
@@ -385,7 +441,7 @@ switch (_mode) do
         deleteVehicle (uiNamespace getVariable["ACP_Camera", objNull]);
         deleteVehicle (uiNamespace getVariable["ACP_Target", objNull]);
         (uiNamespace getVariable "RscDisplayAdministrator") closeDisplay IDC_OK;
-        missionNamespace setVariable ["ACP_response", [2,[0,0,0,0,0,0,0,0]]];
-        missionNamespace getVariable["acp_confirmRestart", 0];
+        missionNamespace setVariable ["ACP_response", [2,""]];
+        missionNamespace setVariable["acp_confirmRestart", 0];
     };
 };
