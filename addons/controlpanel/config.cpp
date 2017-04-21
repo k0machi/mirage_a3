@@ -75,7 +75,7 @@ class CfgAdminActions
             {
                 name = "Neutralize Unit";
                 tooltip = "Neutralize an object by intrinsic means:\n - soldiers are blown up by mine\n - vehicles are shelled by artillery\n - air units are hit by AA missile\n - underwater units are simply killed";
-            }
+            };
             class respawnPlayer
             {
                 name = "Force Respawn";

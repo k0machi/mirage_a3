@@ -40,8 +40,6 @@
 #define COLOR_INDEPENDENT [(profilenamespace getvariable ['Map_Independent_R',0]),(profilenamespace getvariable ['Map_Independent_G',1]),(profilenamespace getvariable ['Map_Independent_B',1]),(profilenamespace getvariable ['Map_Independent_A',0.8])]
 #define COLOR_CIV [(profilenamespace getvariable ['Map_Civilian_R',0]),(profilenamespace getvariable ['Map_Civilian_G',1]),(profilenamespace getvariable ['Map_Civilian_B',1]),(profilenamespace getvariable ['Map_Civilian_A',0.8])]
 
-#define IDC_UNIT_INFO_TEXT ["Name: %1<br />Class: %2<br />Side: <t color='%8'>%3</t><br />Map Position: <br />   X: %4<br />   Y: %5<br />   Z: %6<br />GRIDREF: %7<br /><br /><a href='http://steamcommunity.com/profiles/%9'>Steam Profile</a>", name _center, typeOf _center, side _center, round ((getPosATL _center) select 0), round ((getPosATL _center) select 1), round ((getPosATL _center) select 2), mapGridPosition _center,([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _center))) call BIS_fnc_colorRGBAtoHTML, getPlayerUID _center]
-
 #define PLAYER_LIST allPlayers
 
 #define CAMERA_OFFSET [0.12,0,0.15]
@@ -202,7 +200,7 @@ switch (_mode) do
         CONTROL ctrlMapAnimAdd[MAP_SPEED, MAP_ZOOM,_center];
         ctrlMapAnimCommit CONTROL;
         _idc = IDC_UNIT_INFO;
-        CONTROL ctrlSetStructuredText parseText format IDC_UNIT_INFO_TEXT;
+        CONTROL ctrlSetStructuredText parseText format ["Name: %1<br />Class: %2<br />Side: <t color='%8'>%3</t><br />Map Position: <br />   X: %4<br />   Y: %5<br />   Z: %6<br />GRIDREF: %7<br /><a href='https://steamcommunity.com/profiles/%9'>Steam Profile</a>", name _center, typeOf _center, side _center, round ((getPosATL _center) select 0), round ((getPosATL _center) select 1), round ((getPosATL _center) select 2), mapGridPosition _center,(([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _center))) call BIS_fnc_colorRGBAtoHTML), getPlayerUID _center];
         _idc = IDC_BUTTON_CAMERA_MODE;
         CONTROL ctrlSetText "NORMAL";
         _display setVariable["camMode", 0];
