@@ -65,7 +65,8 @@ class CfgAdminActions
         };
         class unitStatus
         {
-            category = "Unit manipulation";
+            category = "Unit Manipulation";
+            file = "\mirage\addons\controlpanel\adminactions";
             class healUnit
             {
                 name = "Heal Unit";
@@ -105,6 +106,7 @@ class CfgAdminActions
         class entityCreation
         {
             category = "Object Creation";
+            file = "\mirage\addons\controlpanel\adminactions";
             class createArsenalBox
             {
                 name = "Spawn Arsenal Box";
