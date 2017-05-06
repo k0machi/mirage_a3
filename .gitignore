@@ -1,1 +1,4 @@
 /release/*
+*.log
+*.bikey
+*.biprivatekey
