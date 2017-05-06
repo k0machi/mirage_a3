@@ -201,6 +201,8 @@ switch (_mode) do
         GETCONTROL(IDC_BUTTON_EXEC_LOCAL) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecLocal", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_EXEC_REMOTE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecRemote", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_EXEC_SERVER) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onExecServer", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_CONSOLE_SAVE) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonSave", _this] call MRG_fnc_adminControlPanel} }];
+        GETCONTROL(IDC_BUTTON_CONSOLE_LOAD) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonLoad", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_KICK) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonKick", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_BAN) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonBan", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_BUTTON_RESTART) ctrlAddEventHandler["ButtonClick", { with uiNamespace do { ["onButtonRestart", _this] call MRG_fnc_adminControlPanel} }];
@@ -289,6 +291,16 @@ switch (_mode) do
         }
         _display displayAddEventHandler ["MouseMoving", LOGFUNC(IDC_MESSAGE_FIELD)];
         _display displayAddEventHandler ["MouseHolding", LOGFUNC(IDC_MESSAGE_FIELD)];
+    };
+    case "onButtonSave": 
+    {
+        _display = (uiNamespace getVariable "RscDisplayAdministrator");
+        profileNamespace setVariable["RscDisplayAdministrator_expression", ctrlText GETCONTROL(IDC_CODE_EDITBOX)];
+    };
+    case "onButtonLoad":
+    {
+        _display = (uiNamespace getVariable "RscDisplayAdministrator");
+        GETCONTROL(IDC_CODE_EDITBOX) ctrlSetText (profileNamespace getVariable["RscDisplayAdministrator_expression", ""]);
     };
     case "onExecLocal":
     {
