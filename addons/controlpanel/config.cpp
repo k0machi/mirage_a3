@@ -48,8 +48,9 @@ class CfgAdminActions
 {
     class MRG
     {
-        class builtIn
+        class playerPositon
         {
+            category = "Position Manipulation";
             file = "\mirage\addons\controlpanel\adminactions";
             class teleportToPlayer 
             {
@@ -61,6 +62,10 @@ class CfgAdminActions
                 name = "Teleport to Squad";
                 tooltip = "Teleports player to his current group.\nArguments: [mode::STRING, includeVehicle::BOOL]\nModes: leader, randomSquadmate, nearestUnit";
             };
+        };
+        class unitStatus
+        {
+            category = "Unit manipulation";
             class healUnit
             {
                 name = "Heal Unit";
@@ -81,30 +86,34 @@ class CfgAdminActions
                 name = "Force Respawn";
                 tooltip = "Respawn selected player.\nArguments: [mode::STRING]\nModes: forced, instant, respawnDisabled";
             };
-            class changeUnitSide
-            {
-                name = "Change Side";
-                tooltip = "Change selected unit side.\nArguments: [newSide::SIDE, includeGroup::BOOL]";
-            };
-            class createArsenalBox
-            {
-                name = "Spawn Arsenal Box";
-                tooltip = "Create Arsenal Box infront of selected unit.\nArguments: [boxClass::STRING]";
-            };
             class openArsenal
             {
                 name = "Open Arsenal on Unit";
                 tooltip = "Opens Virtual Arsenal on a target unit.\nWARNING: LOCALITY ISSUES";
             };
-            class createZeusModule
+            class changeUnitSide
             {
-                name = "Create Zeus Module";
-                tooltip = "Create Zeus Module and assign selected player as zeus.\nArguments: [name::STRING, addons::NUMBER]";
+                name = "Change Side";
+                tooltip = "Change selected unit side.\nArguments: [newSide::SIDE, includeGroup::BOOL]";
             };
             class vehicleLogistics
             {
                 name = "Vehicle Service";
                 tooltip = "Repair\Rearm\Refuel selected unit's vehicle.\nArguments: [repair::BOOL, rearm::BOOL, refuel::BOOL]";
+            };
+        };
+        class entityCreation
+        {
+            category = "Object Creation";
+            class createArsenalBox
+            {
+                name = "Spawn Arsenal Box";
+                tooltip = "Create Arsenal Box infront of selected unit.\nArguments: [boxClass::STRING]";
+            };
+            class createZeusModule
+            {
+                name = "Create Zeus Module";
+                tooltip = "Create Zeus Module and assign selected player as zeus.\nArguments: [name::STRING, addons::NUMBER]";
             };
         };
     };

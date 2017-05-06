@@ -217,7 +217,7 @@ switch (_mode) do
         { 
             CONTROL lbAdd name _x;
             CONTROL lbSetPicture [_forEachIndex, ["\a3\ui_f\data\Map\VehicleIcons\iconMan_ca.paa", "\a3\ui_f\data\Map\VehicleIcons\iconCar_ca.paa"] select (vehicle _x != _x)];
-            CONTROL lbSetPictureColor [_forEachIndex, (([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _x))) call BIS_fnc_colorRGBAtoHTML)];
+            CONTROL lbSetPictureColor [_forEachIndex, ([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _x)))];
             CONTROL lbSetTooltip [_forEachIndex, getPlayerUID _x];
         } foreach PLAYER_LIST;
         _center = PLAYER_LIST select 0;
