@@ -227,6 +227,63 @@ class RscDisplayAdministrator : RscStandardDisplay
             w = 15.5 * GUI_GRID_W;
             h = 22 * GUI_GRID_H;
         };
+        class buttonRecall : RscButton
+        {
+            idc = 1800;
+            moving = 1;
+            text = "RC";
+            x = 34.5 * GUI_GRID_W + GUI_GRID_X;
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 2 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;            
+        };
+        class buttonMemory : RscButton
+        {
+            idc = 1801;
+            moving = 1;
+            text = "MEM";
+            x = 36.5 * GUI_GRID_W + GUI_GRID_X;
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 2 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;            
+        };
+        class buttonpStatement : RscButton
+        {
+            idc = 1802;
+            moving = 1;
+            text = "PREV";
+            x = 40.75 * GUI_GRID_W + GUI_GRID_X;
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 4 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;            
+        };
+        class buttonnStatement : buttonpStatement
+        {
+            idc = 1803;
+            text = "NEXT";
+            x = 44.75 * GUI_GRID_W + GUI_GRID_X;   
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 4 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;           
+        };
+        class buttonConfig : RscButton
+        {
+            idc = 1804;
+            text = "CFG";
+            x = 51 * GUI_GRID_W + GUI_GRID_X;   
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 2 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;               
+        };
+        class buttonHelp : RscButton
+        {
+            idc = 1805;
+            text = "FUNC";
+            x = 53 * GUI_GRID_W + GUI_GRID_X;   
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 2 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;               
+        };
         class codeField: RscEdit
         {
             idc = 1400;
@@ -234,9 +291,42 @@ class RscDisplayAdministrator : RscStandardDisplay
             style = 16+0;
             autocomplete = "scripting";
             x = 34.5 * GUI_GRID_W + GUI_GRID_X;
-            y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 20.5 * GUI_GRID_W;
-            h = 14 * GUI_GRID_H;
+            y = 2 * GUI_GRID_H + GUI_GRID_Y;
+            w = 20.5 * GUI_GRID_W; //x 55
+            h = 13 * GUI_GRID_H;
+        };
+        class buttonServerExec: RscButton
+        {
+            idc = 1602;
+            moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
+            text = "Server Exec"; //--- ToDo: Localize;
+            x = 34.5 * GUI_GRID_W + GUI_GRID_X;
+            y = 23 * GUI_GRID_H + GUI_GRID_Y;
+            w = 7 * GUI_GRID_W;
+            h = 3 * GUI_GRID_H;
+        };
+        class ButtonRemoteExec: RscButton
+        {
+            idc = 1603;
+            moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
+            text = "Remote Exec"; //--- ToDo: Localize;
+            x = 41.5 * GUI_GRID_W + GUI_GRID_X;
+            y = 23 * GUI_GRID_H + GUI_GRID_Y;
+            w = 7 * GUI_GRID_W;
+            h = 3 * GUI_GRID_H;
+        };
+        class buttonLocalExec: RscButton
+        {
+            idc = 1604;
+            moving = 1;
+            colorDisabled[] = {0.6,0.6,0.6,0.25};
+            text = "Local Exec"; //--- ToDo: Localize;
+            x = 48.5 * GUI_GRID_W + GUI_GRID_X;
+            y = 23 * GUI_GRID_H + GUI_GRID_Y;
+            w = 6.5 * GUI_GRID_W;
+            h = 3 * GUI_GRID_H;
         };
         class WatchInput1: RscEdit
         {
@@ -310,39 +400,6 @@ class RscDisplayAdministrator : RscStandardDisplay
             x = 19 * GUI_GRID_W + GUI_GRID_X;
             y = 23 * GUI_GRID_H + GUI_GRID_Y;
             w = 15.5 * GUI_GRID_W;
-            h = 3 * GUI_GRID_H;
-        };
-        class buttonServerExec: RscButton
-        {
-            idc = 1602;
-            moving = 1;
-            colorDisabled[] = {0.6,0.6,0.6,0.25};
-            text = "Server Exec"; //--- ToDo: Localize;
-            x = 34.5 * GUI_GRID_W + GUI_GRID_X;
-            y = 23 * GUI_GRID_H + GUI_GRID_Y;
-            w = 7 * GUI_GRID_W;
-            h = 3 * GUI_GRID_H;
-        };
-        class ButtonRemoteExec: RscButton
-        {
-            idc = 1603;
-            moving = 1;
-            colorDisabled[] = {0.6,0.6,0.6,0.25};
-            text = "Remote Exec"; //--- ToDo: Localize;
-            x = 41.5 * GUI_GRID_W + GUI_GRID_X;
-            y = 23 * GUI_GRID_H + GUI_GRID_Y;
-            w = 7 * GUI_GRID_W;
-            h = 3 * GUI_GRID_H;
-        };
-        class buttonLocalExec: RscButton
-        {
-            idc = 1604;
-            moving = 1;
-            colorDisabled[] = {0.6,0.6,0.6,0.25};
-            text = "Local Exec"; //--- ToDo: Localize;
-            x = 48.5 * GUI_GRID_W + GUI_GRID_X;
-            y = 23 * GUI_GRID_H + GUI_GRID_Y;
-            w = 6.5 * GUI_GRID_W;
             h = 3 * GUI_GRID_H;
         };
         class ButtonClose: RscActiveText
