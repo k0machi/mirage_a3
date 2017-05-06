@@ -236,9 +236,9 @@ class RscDisplayAdministrator : RscStandardDisplay
             style = 16+0;
             autocomplete = "scripting";
             x = 19 * GUI_GRID_W + GUI_GRID_X;
-            y = 21 * GUI_GRID_H + GUI_GRID_Y;
+            y = 22 * GUI_GRID_H + GUI_GRID_Y;
             w = 15.5 * GUI_GRID_W; //x 55
-            h = 2 * GUI_GRID_H;
+            h = 1 * GUI_GRID_H;
         };
         /*
         class actionList: RscListbox
@@ -259,7 +259,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             x = 19 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
             w = 15.5 * GUI_GRID_W;
-            h = 20 * GUI_GRID_H;            
+            h = 21 * GUI_GRID_H;            
         };
         class buttonRecall : RscButton
         {
@@ -281,6 +281,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             w = 3.5 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;            
         };
+        /*
         class buttonpStatement : RscButton
         {
             idc = 1802;
@@ -300,6 +301,7 @@ class RscDisplayAdministrator : RscStandardDisplay
             w = 3.75 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;           
         };
+        */
         class buttonConfig : RscButton
         {
             idc = 1804;
