@@ -217,7 +217,7 @@ switch (_mode) do
         { 
             CONTROL lbAdd name _x;
             CONTROL lbSetPicture [_forEachIndex, ["\a3\ui_f\data\Map\VehicleIcons\iconMan_ca.paa", "\a3\ui_f\data\Map\VehicleIcons\iconCar_ca.paa"] select (vehicle _x != _x)];
-            CONTROL lbSetPictureColor [_forEachIndex, [1,1,1,1]];
+            CONTROL lbSetPictureColor [_forEachIndex, (([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _x))) call BIS_fnc_colorRGBAtoHTML)];
             CONTROL lbSetTooltip [_forEachIndex, getPlayerUID _x];
         } foreach PLAYER_LIST;
         _center = PLAYER_LIST select 0;
@@ -426,7 +426,7 @@ switch (_mode) do
         CONTROL ctrlMapAnimAdd[MAP_SPEED, MAP_ZOOM,_center];
         ctrlMapAnimCommit CONTROL;
         _idc = IDC_UNIT_INFO;
-        CONTROL ctrlSetStructuredText parseText format IDC_UNIT_INFO_TEXT;
+        CONTROL ctrlSetStructuredText parseText format ["Name: %1<br />Class: %2<br />Side: <t color='%8'>%3</t><br />Map Position: <br />   X: %4<br />   Y: %5<br />   Z: %6<br />GRIDREF: %7<br /><a href='https://steamcommunity.com/profiles/%9'>Steam Profile</a>", name _center, typeOf _center, side _center, round ((getPosATL _center) select 0), round ((getPosATL _center) select 1), round ((getPosATL _center) select 2), mapGridPosition _center,(([COLOR_BLUFOR, COLOR_OPFOR, COLOR_INDEPENDENT, COLOR_CIV,[1,0,0,1],COLOR_CIV] select ([west,east,resistance,civilian,sideEnemy,sideLogic] find (side _center))) call BIS_fnc_colorRGBAtoHTML), getPlayerUID _center];
         _camera = uiNamespace getVariable["ACP_Camera", objNull];
         _tgt = uiNamespace getVariable["ACP_Target", objNull];
         detach _camera;
