@@ -41,12 +41,12 @@ with missionNamespace do
             if (clientOwner == _netId) exitWith {};
             _configAdmins = getArray(configFile >> "CfgAdmins" >> "ids");
             _missionAdmins = getArray(missionConfigFile >> "CfgAdmins" >> "ids");
-            if (_uid in (_configAdmins + _missionAdmins)) then 
+            if (_uid in (_configAdmins + _missionAdmins)) then
             {
-                ACP_response = [0, ([MISSION_ADMIN_FLAGS, CONFIG_ADMIN_FLAGS] select (_uid in _configAdmins))]; 
+                ACP_response = [0, ([MISSION_ADMIN_FLAGS, CONFIG_ADMIN_FLAGS] select (_uid in _configAdmins))];
             }
-            else 
-            { 
+            else
+            {
                 ACP_response = [1,"0:"];
             };
             _netId publicVariableClient "ACP_response";
