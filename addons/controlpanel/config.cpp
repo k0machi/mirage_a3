@@ -218,6 +218,18 @@ class RscDisplayAdministrator : RscStandardDisplay
             onLoad = "";
             tooltip = "ViewPort"; //--- ToDo: Localize;
         };
+        class paramField: RscEdit
+        {
+            idc = 1502;
+            moving = 1;
+            style = 16+0;
+            autocomplete = "scripting";
+            x = 19 * GUI_GRID_W + GUI_GRID_X;
+            y = 21 * GUI_GRID_H + GUI_GRID_Y;
+            w = 15.5 * GUI_GRID_W; //x 55
+            h = 2 * GUI_GRID_H;
+        };
+        /*
         class actionList: RscListbox
         {
             idc = 1501;
@@ -225,26 +237,37 @@ class RscDisplayAdministrator : RscStandardDisplay
             x = 19 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
             w = 15.5 * GUI_GRID_W;
-            h = 22 * GUI_GRID_H;
+            h = 20 * GUI_GRID_H;
+        };
+        */
+        class actionTree : RscTree
+        {
+            idc = 1901;
+            moving = 1;
+            colorBackground[] = { 0,0,0,0.75 };
+            x = 19 * GUI_GRID_W + GUI_GRID_X;
+            y = 1 * GUI_GRID_H + GUI_GRID_Y;
+            w = 15.5 * GUI_GRID_W;
+            h = 20 * GUI_GRID_H;            
         };
         class buttonRecall : RscButton
         {
             idc = 1800;
             moving = 1;
-            text = "RC";
+            text = "LOAD";
             x = 34.5 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 2 * GUI_GRID_W;
+            w = 3 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;            
         };
         class buttonMemory : RscButton
         {
             idc = 1801;
             moving = 1;
-            text = "MEM";
-            x = 36.5 * GUI_GRID_W + GUI_GRID_X;
+            text = "SAVE";
+            x = 37.5 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 2 * GUI_GRID_W;
+            w = 3.5 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;            
         };
         class buttonpStatement : RscButton
@@ -252,9 +275,9 @@ class RscDisplayAdministrator : RscStandardDisplay
             idc = 1802;
             moving = 1;
             text = "PREV";
-            x = 40.75 * GUI_GRID_W + GUI_GRID_X;
+            x = 41.0 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 4 * GUI_GRID_W;
+            w = 3.75 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;            
         };
         class buttonnStatement : buttonpStatement
@@ -263,25 +286,25 @@ class RscDisplayAdministrator : RscStandardDisplay
             text = "NEXT";
             x = 44.75 * GUI_GRID_W + GUI_GRID_X;   
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 4 * GUI_GRID_W;
+            w = 3.75 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;           
         };
         class buttonConfig : RscButton
         {
             idc = 1804;
-            text = "CFG";
-            x = 51 * GUI_GRID_W + GUI_GRID_X;   
+            text = "CONFIG";
+            x = 48.5 * GUI_GRID_W + GUI_GRID_X;   
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 2 * GUI_GRID_W;
+            w = 3 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;               
         };
         class buttonHelp : RscButton
         {
             idc = 1805;
-            text = "FUNC";
-            x = 53 * GUI_GRID_W + GUI_GRID_X;   
+            text = "HELP";
+            x = 51.5 * GUI_GRID_W + GUI_GRID_X;   
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
-            w = 2 * GUI_GRID_W;
+            w = 3.5 * GUI_GRID_W;
             h = 1 * GUI_GRID_H;               
         };
         class codeField: RscEdit
@@ -522,6 +545,7 @@ class RscDisplayAdministrator : RscStandardDisplay
         {
             idc = 2200;
             moving = 1;
+            colorBackground[] = { 0,0,0,0.5};
             x = -11 * GUI_GRID_W + GUI_GRID_X;
             y = -0.5 * GUI_GRID_H + GUI_GRID_Y;
             w = 66 * GUI_GRID_W;

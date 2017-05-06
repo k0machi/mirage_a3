@@ -2,7 +2,11 @@
 
 #define IDC_PLAYER_LISTBOX 1500
 #define IDC_TITLE_TEXT  1000
+
 #define IDC_ACTION_LISTBOX 1501
+#define IDC_ACTION_TREE 1901
+#define IDC_ACTION_PARAMS 1502
+
 #define IDC_MAP 1102
 #define IDC_CAMERA 1100
 #define IDC_UNIT_INFO 1101
@@ -15,6 +19,12 @@
 #define IDC_BUTTON_EXEC_LOCAL 1604
 #define IDC_BUTTON_EXEC_REMOTE 1603
 #define IDC_BUTTON_EXEC_SERVER 1602
+#define IDC_BUTTON_CONSOLE_SAVE 1800
+#define IDC_BUTTON_CONSOLE_LOAD 1801
+#define IDC_BUTTON_CONSOLE_PREV 1802
+#define IDC_BUTTON_CONSOLE_NEXT 1803
+#define IDC_BUTTON_CONSOLE_CFG 1804
+#define IDC_BUTTON_CONSOLE_HELP 1805
 #define IDC_BUTTON_CAMERA_MODE 1600
 #define IDC_BUTTON_CLEAR_LOG 1203
 #define IDC_CODE_EDITBOX 1400
@@ -76,6 +86,28 @@ _fnc_addActions =
                 } foreach ("true" configClasses _x);
             } foreach ("true" configClasses _x);
         } foreach ("true" configClasses _x);
+    } foreach [configFile >> "CfgAdminActions", missionConfigFile >> "CfgAdminActions"];
+    _actionList
+};
+
+_fnc_addActions2 = 
+{
+    _actionList = [];
+    {
+        {
+            _tag = if (getText (_x >> "tag") == "") then { configName _x } else { getText (_x >> "tag") };
+            {
+                _cat = if (getText (_x >> "category") == "") then { configName _x } else { getText (_x >> "category") };
+                _catList = [];
+                {
+                    _name = [getText (_x >> "name"), format["%1_act_%2",_tag,configName _x]] select (getText(_x >> "name") == "");
+                    _tooltip = [getText (_x >> "tooltip"), "This action has no additional information associated with it."] select (getText(_x >> "tooltip") == "");
+                    _action = format["%1_act_%2", _tag, configName _x];
+                    _catList pushBack [_name,_tooltip, _action];
+                } foreach ("true" configClasses _x);
+                _actionList pushBack [_cat, _catList];
+            } foreach ("true" configClasses _x);
+        } foreach ("true" configClasses _x);        
     } foreach [configFile >> "CfgAdminActions", missionConfigFile >> "CfgAdminActions"];
     _actionList
 };
@@ -180,6 +212,7 @@ switch (_mode) do
         GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["LBSelChanged", { with uiNamespace do { ["onPlayerListSelectionChanged", _this] call MRG_fnc_adminControlPanel} }];
         GETCONTROL(IDC_PLAYER_LISTBOX) ctrlAddEventHandler["onLBDblClick", { with uiNamespace do { ["onPlayerListDblClick", _this] call MRG_fnc_adminControlPanel} }];
         { GETCONTROL((_x select 0)) ctrlEnable ([false,true] select ((_x select 1) in (call (missionNamespace getVariable "mrg_checkflags")))); } foreach [[IDC_BUTTON_KICK,"a"], [IDC_BUTTON_BAN,"b"], [IDC_BUTTON_RESTART, "c"], [IDC_BUTTON_ACTION,"d"], [IDC_BUTTON_EXEC_LOCAL, "e"], [IDC_BUTTON_EXEC_REMOTE, "f"], [IDC_BUTTON_EXEC_SERVER,"g"],[IDC_BUTTON_CONSOLE,"h"]];
+        
         private _idc = IDC_PLAYER_LISTBOX;
         { 
             CONTROL lbAdd name _x;
@@ -190,12 +223,24 @@ switch (_mode) do
         _center = PLAYER_LIST select 0;
         uiNamespace setVariable["ACP_selectedPlayer", _center];
         CONTROL lbSetCurSel 0;
+        /*
         _idc = IDC_ACTION_LISTBOX;
         { 
             CONTROL lbAdd (_x select 0);
             CONTROL lbSetTooltip [_foreachIndex, (_x select 1)];
             CONTROL lbSetData [_foreachIndex, (_x select 2)];
         } foreach (call _fnc_addActions);
+        */
+        _idc = IDC_ACTION_TREE;
+        {
+            CONTROL tvAdd [[], _x select 0];
+            _path = _forEachIndex;
+            {
+                CONTROL tvAdd[[_path], _x select 0];
+                CONTROL tvSetTooltip[[_path, _forEachIndex], _x select 1];
+                CONTROL tvSetData [[_path, _forEachIndex], _x select 2];
+            } foreach (_x select 1);            
+        } foreach (call _fnc_addActions2);
         _idc = IDC_MAP;
         CONTROL ctrlMapAnimAdd[MAP_SPEED, MAP_ZOOM,_center];
         ctrlMapAnimCommit CONTROL;
@@ -344,9 +389,10 @@ switch (_mode) do
     {
         private _display = (uiNamespace getVariable "RscDisplayAdministrator");
         private _center = uiNamespace getVariable["ACP_selectedPlayer", player];
-        private _args = ctrlText GETCONTROL(IDC_CODE_EDITBOX);
-        private _action = GETCONTROL(IDC_ACTION_LISTBOX) lbData (lbCurSel GETCONTROL(IDC_ACTION_LISTBOX));
+        private _args = ctrlText GETCONTROL(IDC_ACTION_PARAMS);
+        private _action = GETCONTROL(IDC_ACTION_TREE) tvData (tvCurSel GETCONTROL(IDC_ACTION_TREE));
         private _format = format["[_center, [%1]] call %2",_args,_action];
+        systemchat format["Current selected tree action: %1", GETCONTROL(IDC_ACTION_TREE) tvData (tvCurSel GETCONTROL(IDC_ACTION_TREE))];
         if ("d" in (call (missionNamespace getVariable "mrg_checkflags"))) then
         {
             with missionNamespace do 
