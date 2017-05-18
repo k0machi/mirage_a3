@@ -457,7 +457,7 @@ switch (_mode) do
         private _args = ctrlText GETCONTROL(IDC_ACTION_PARAMS);
         private _action = GETCONTROL(IDC_ACTION_TREE) tvData (tvCurSel GETCONTROL(IDC_ACTION_TREE));
         private _format = format["[_center, [%1]] call %2",_args,_action];
-        systemchat format["Current selected tree action: %1", GETCONTROL(IDC_ACTION_TREE) tvData (tvCurSel GETCONTROL(IDC_ACTION_TREE))];
+        //systemchat format["Current selected tree action: %1", GETCONTROL(IDC_ACTION_TREE) tvData (tvCurSel GETCONTROL(IDC_ACTION_TREE))];
         if ("d" in (call (missionNamespace getVariable "mrg_checkflags"))) then
         {
             with missionNamespace do 
