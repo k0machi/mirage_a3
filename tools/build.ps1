@@ -1,3 +1,10 @@
+Param
+(
+    [parameter(HelpMessage="Perform Silently")]
+    [switch]
+    $Silent
+)
+
 function Build-Addon
 {
     Param
@@ -79,11 +86,13 @@ function Read-AddonMetaInfo
         $MetadataObject = $MetadataJSON | ConvertFrom-Json -ErrorAction Stop
         return $MetadataObject
     }
-    catch [System.Management.Automation.ActionPreferenceStopException],[System.Management.Automation.ParameterBindingException]
+    catch [System.Management.Automation.ActionPreferenceStopException],[System.Management.Automation.ParameterBindingException],[System.ArgumentException]
     {
-        Write-Host "Error reading metadata file!"
+        Write-Host "Error reading metadata file!" -ForegroundColor Red
+        exit
     };
 };
+
 
 Write-Host "Preparing Enviroment" -ForegroundColor Green
 Set-Location $PSScriptRoot
@@ -95,19 +104,20 @@ Write-Host "Project: $ProjectName"
 $WorkDir = $Project.metadata."working-directory"
 try
 {
-    $WorkDir = Get-Item $WorkDir -ErrorAction Stop
+    $WorkDir = Get-Item -Path $WorkDir -ErrorAction Stop
 }
-catch [System.Management.Automation.ActionPreferenceStopException]
+catch [System.Management.Automation.ActionPreferenceStopException],[System.Management.Automation.ParameterBindingException]
 {
-    Write-Host "Error setting working directory! Aborting..."
+    Write-Host "Error setting working directory! Aborting..." -ForegroundColor Red
+    exit
 }
 Write-Host "Setting Work Directory to $WorkDir" -ForegroundColor Cyan
 $ReleaseDir = $Project.metadata."release-dir"
 try
 {
-    $ReleaseDir = Get-Item $WorkDir\$ReleaseDir -ErrorAction Stop
+    $ReleaseDir = Get-Item -Path $WorkDir\$ReleaseDir -ErrorAction Stop
 }
-catch [System.Management.Automation.ActionPreferenceStopException]
+catch [System.Management.Automation.ActionPreferenceStopException],[System.Management.Automation.ParameterBindingException]
 {
     Write-Host "Release directory not found, Creating..."
     $ReleaseDir = New-Item -ItemType Directory -Path $WorkDir -Name "release" -Force
@@ -116,15 +126,17 @@ Write-Host "Release directory set to $ReleaseDir" -ForegroundColor Cyan
 $AddonDir = $Project.metadata."addon-dir"
 try
 {
-    $AddonDir = Get-Item $WorkDir\$AddonDir -ErrorAction Stop
+    $AddonDir = Get-Item -Path $WorkDir\$AddonDir -ErrorAction Stop
 }
-catch [System.Management.Automation.ActionPreferenceStopException]
+catch [System.Management.Automation.ActionPreferenceStopException],[System.Management.Automation.ParameterBindingException]
 {
     Write-Host "Error setting up addon directory! Aborting..."
+    exit
 }
 Write-Host "Source directory set to $AddonDir" -ForegroundColor Cyan
 
 Set-Location $WorkDir
+if (((Get-Item $ReleaseDir).FullName -eq ($PSScriptRoot).Substring(0,3)) -or ($ReleaseDir -eq $null)) { Write-Host "DANGER: $ReleaseDir is ambigious or set to a drive root!!!`nTo prevent data loss operation is aborted.`nPlease verify addon.json paths`nAlternatively update WMF to 5.1 if using old version of Powershell" -ForegroundColor Red; exit }
 
 try
 {
@@ -144,7 +156,14 @@ if ($ReleaseDir.Exists -and (($ReleaseDir.GetDirectories().Count -gt 0) -or ($Re
     foreach($item in Get-ChildItem $ReleaseDir)
     {
         Write-Host "Removing $item" -ForegroundColor Magenta
-        Remove-Item $item.FullName -Force -Recurse
+        if ($Silent)
+        {
+            Remove-Item $item.FullName -Force -Recurse -Verbose
+        }
+        else
+        {
+            Remove-Item $item.FullName -Force -Recurse -Confirm
+        }
     }
 }
 
@@ -156,7 +175,7 @@ $TempDir = New-Item -Path $ReleaseDir -Name "temp" -ItemType Directory
 $Keys = Create-BIKeyPair -Name ([string]::Format("{0}-{1}",$ProjectName, $Description)) -Destination $TempDir
 foreach ($item in Get-ChildItem $AddonDir)
 {
-    Write-Host ([string]::Format("Building `a `t [[[{0}]]]", $item.BaseName)) -ForegroundColor Green
+    Write-Host ([string]::Format("Building `t [[[{0}]]]", $item.BaseName)) -ForegroundColor Green
     $AddonObject = Build-Addon -AddonName $item.BaseName -AddonPath $item.FullName -PBOPrefix ((Get-Content ($item.FullName+"\`$PBOPREFIX$.txt")).Split(" ")[2]) -Destination $AddonsDir
     $BiSign = Sign-Addon -Authority $Keys.BIPrivateKey -FileToSign $AddonObject.Path
     if ($AddonObject.Path -ne "") { Write-Host "Build Successful!`n" -ForegroundColor Green } else { Write-Host "Build Failed :(" -ForegroundColor Green }
