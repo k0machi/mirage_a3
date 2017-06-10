@@ -1,0 +1,10 @@
+{
+    "metadata" : 
+    {
+        "name" : "mirage",
+        "working-directory" : "..\\",
+        "addon-dir" : "addons\\",
+        "release-dir" : "release\\"
+    },
+    "copy-directories": ["userconfig"]
+}
